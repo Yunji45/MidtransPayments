@@ -16,4 +16,6 @@ use App\Http\Controllers\OrderController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('orders', OrderController::class)->only(['index', 'show']);
+// Route::resource('orders', OrderController::class);
+Route::get('/orders', [OrderController::class,'index'])->name('index');
+Route::post('/orders-chekout',[OrderController::class,'store'])->name('cekout');

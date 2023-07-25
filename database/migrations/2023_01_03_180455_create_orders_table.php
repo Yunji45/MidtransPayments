@@ -15,10 +15,12 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('number', 16);
-            $table->decimal('total_price', 10, 2);
-            $table->enum('payment_status', ['1', '2', '3', '4'])->comment('1=menunggu pembayaran, 2=sudah dibayar, 3=kadaluarsa, 4=batal');
-            $table->string('snap_token', 36)->nullable();        
+            $table->string('name');
+            $table->string('alamat');
+            $table->integer('telepon');
+            $table->integer('qty');
+            $table->integer('total_price');
+            $table->enum('payment_status', ['paid','unpaid'])->default('unpaid');
             $table->timestamps();
         });
     }

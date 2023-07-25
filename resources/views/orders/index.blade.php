@@ -1,106 +1,69 @@
 <!doctype html>
-<html lang="id">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Order Saya</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
-    <style>
-        html {
-            font-size: 14px;
-        }
-        body{
-            background-color : black;
-        }
-
-        @media (min-width: 768px) {
-            html {
-                font-size: 16px;
-            }
-        }
-
-        .container {
-            max-width: 960px;
-        }
-
-        .pricing-header {
-            max-width: 700px;
-        }
-
-        .card-deck .card {
-            min-width: 220px;
-        }
-
-        .border-top {
-            border-top: 1px solid #e5e5e5;
-        }
-
-        .border-bottom {
-            border-bottom: 1px solid #e5e5e5;
-        }
-
-        .box-shadow {
-            box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-        }
-
-    </style>
-</head>
-
-<body>
-
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-success    border-bottom box-shadow">
-        <h5 class="my-0 mr-md-auto font-weight-normal">Test Midtrans</h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="https://github.com/Yunji45">GitHub</a>
-        </nav>
-    </div>
-
-    <div class="container pb-5 pt-5">
-        <div class="row">
-            <div class="col-12">
-                <div class="card shadow">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-condensed">
-                            <thead class="thead-light">
-                                <th scope="col">ID</th>
-                                <th scope="col">Total Harga</th>
-                                <th scope="col">Status Pembayaran</th>
-                                <th scope="col"></th>
-                            </thead>
-                            <tbody>
-                                @foreach ($orders as $order)
-                                    <tr>
-                                        <td>#{{ $order->number }}</td>
-                                        <td>{{ number_format($order->total_price, 2, ',', '.') }}</td>
-                                        <td>
-                                            @if ($order->payment_status == 1)
-                                                Menunggu Pembayaran
-                                            @elseif ($order->payment_status == 2)
-                                                Sudah Dibayar
-                                            @else
-                                                Kadaluarsa
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('orders.show', $order->id) }}" class="btn btn-info">
-                                                Lihat
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bootstrap demo</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+            crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="card" style="width: 18rem;">
+            <img src="{{asset('img/pisang.jpeg')}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <form action="{{route('cekout')}}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            placeholder="name">
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Alamat</label>
+                        <textarea
+                            type="text"
+                            class="form-control"
+                            id="alamat"
+                            name="alamat"
+                            rows="2"
+                            placeholder="alamat"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Telepon</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="telepon"
+                            name="telepon"
+                            placeholder="no telepon">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Qty</label>
+                        <input type="number" class="form-control" id="qty" name="qty" placeholder="Qty">
+                    </div>
+                    <button type="submit" class="btn btn-success">Checkout</button>
+
+                </form>
             </div>
         </div>
-    </div>
-
-</body>
-
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+            integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+            crossorigin="anonymous"></script>
+    </body>
 </html>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
-use App\Services\Midtrans\CreateSnapTokenService; 
+use App\Services\Midtrans\CreateSnapTokenService;
 
 class OrderController extends Controller
 {
@@ -15,9 +15,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
 
-        return view('orders.index', compact('orders'));
+        return view('orders.index');
+        // return $snapToken;
 
     }
  
@@ -38,7 +38,31 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $total_price = $request->qty * 100000;
+        $request->merge(['total_price' => $total_price, 'payment_status' => 'unpaid']);
+        $data = Order::create($request->all());
+        // Set your Merchant Server Key
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $data->id,
+                'gross_amount' => $data->total_price,
+            ),
+            'customer_details' => array(
+                'name' => $request->name,
+                'phone' => $request->telepon,
+            ),
+        );
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);    
+        return view('orders.show',compact('data','snapToken'));
     }
 
     /**
